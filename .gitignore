@@ -1,0 +1,20 @@
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+*.local
+
+# Dependencies and build artifacts
+node_modules/
+dist/
+coverage/
+
+# Tooling and OS files
+.vite/
+.DS_Store
+*.log
+
+# Android generated files
+android/.gradle/
+android/build/
+android/app/build/

@@ -1,0 +1,27 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="car-body" x1="74" y1="286" x2="438" y2="286" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B7285"/>
+      <stop offset="1" stop-color="#25C6BE"/>
+    </linearGradient>
+    <linearGradient id="wheel-ring" x1="129" y1="382" x2="383" y2="382" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B7285"/>
+      <stop offset="1" stop-color="#25C6BE"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M92 315C92 264.742 132.742 224 183 224H329C379.258 224 420 264.742 420 315V321C420 332.046 411.046 341 400 341H390C377.297 341 365.513 334.415 359.157 323.603L350 308H162L152.843 323.603C146.487 334.415 134.703 341 122 341H112C100.954 341 92 332.046 92 321V315Z" fill="url(#car-body)"/>
+    <path d="M171 232L218 177.5C225.596 168.69 236.649 163.622 248.281 163.622H332.127C342.244 163.622 352.086 166.848 360.233 172.829L421 217H320.5L171 232Z" fill="url(#car-body)"/>
+    <path d="M206 188H323.619C329.18 188 334.59 189.815 339.03 193.171L370 216H193L206 188Z" fill="#D8F5FF"/>
+    <path d="M247 179L260 216" stroke="#8AE0FF" stroke-width="14" stroke-linecap="round"/>
+    <path d="M126 258H89" stroke="#FDBA74" stroke-width="16" stroke-linecap="round"/>
+    <path d="M120 290H66" stroke="#86EFAC" stroke-width="16" stroke-linecap="round"/>
+    <path d="M118 322H84" stroke="#67E8F9" stroke-width="16" stroke-linecap="round"/>
+    <path d="M172 382C172 405.748 152.748 425 129 425C105.252 425 86 405.748 86 382C86 358.252 105.252 339 129 339C152.748 339 172 358.252 172 382Z" fill="url(#wheel-ring)"/>
+    <path d="M426 382C426 405.748 406.748 425 383 425C359.252 425 340 405.748 340 382C340 358.252 359.252 339 383 339C406.748 339 426 358.252 426 382Z" fill="url(#wheel-ring)"/>
+    <path d="M151 382C151 394.15 141.15 404 129 404C116.85 404 107 394.15 107 382C107 369.85 116.85 360 129 360C141.15 360 151 369.85 151 382Z" fill="#A7F3D0"/>
+    <path d="M405 382C405 394.15 395.15 404 383 404C370.85 404 361 394.15 361 382C361 369.85 370.85 360 383 360C395.15 360 405 369.85 405 382Z" fill="#A7F3D0"/>
+    <path d="M383 216H421" stroke="url(#car-body)" stroke-width="18" stroke-linecap="round"/>
+    <path d="M174 216H194" stroke="url(#car-body)" stroke-width="18" stroke-linecap="round"/>
+  </g>
+</svg>
