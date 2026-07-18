@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Users, MapPin, Clock, Calendar, CheckCircle2, XCircle, AlertCircle, Loader2, User, Pencil, Save } from 'lucide-react';
+import { X, Users, MapPin, Clock, Calendar, CheckCircle2, XCircle, AlertCircle, Loader2, User, Pencil, Save, Baby } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -592,6 +592,12 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
             <p className="text-sm text-muted-foreground">
               {reservation.seat_count} asiento{reservation.seat_count !== 1 ? 's' : ''}
             </p>
+            {Number(reservation.children_count) > 0 && (
+              <p className="text-sm text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                <Baby className="w-3.5 h-3.5" />
+                Viaja con {reservation.children_count} niño{reservation.children_count !== 1 ? 's' : ''}
+              </p>
+            )}
           </div>
         </div>
         <div className="flex items-center gap-2">

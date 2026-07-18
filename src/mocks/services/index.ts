@@ -29,10 +29,13 @@ const pushNotification = (userId: string, title: string, message: string) => {
 const notifyDriverOfReservation = (trip: any, reservation: any, passengerName: string) => {
   if (typeof window === 'undefined' || !trip) return;
   const seats = reservation.seat_count > 1 ? `${reservation.seat_count} asientos` : `${reservation.seat_count} asiento`;
+  const children = reservation.children_count > 0
+    ? ` También indicó que viaja con ${reservation.children_count} niño${reservation.children_count > 1 ? 's' : ''}.`
+    : '';
   pushNotification(
     trip.driver_id,
     'Nueva reserva confirmada',
-    `${passengerName} reservó ${seats} en ${trip.origin_name} → ${trip.destination_name}.`
+    `${passengerName} reservó ${seats} en ${trip.origin_name} → ${trip.destination_name}.${children}`
   );
   const detail = {
     type: 'reservation_confirmed',
@@ -89,7 +92,7 @@ export const completeTrip = async (tripId: string) => { const trip = await updat
 export const createReservation = async (data: any) => {
   const trip = demoTrips.find(item => item.id === data.trip_id);
   const autoConfirm = trip?.booking_mode === 'auto';
-  const reservation = { id: id('reservation'), trip_id: data.trip_id, passenger_id: currentUser.id, seat_count: data.seat_count, status: autoConfirm ? 'confirmed' : 'pending', created_at: new Date().toISOString() };
+  const reservation = { id: id('reservation'), trip_id: data.trip_id, passenger_id: currentUser.id, seat_count: data.seat_count, children_count: data.children_count ?? 0, status: autoConfirm ? 'confirmed' : 'pending', created_at: new Date().toISOString() };
   demoReservations.push(reservation);
   if (autoConfirm && trip) {
     trip.available_seats = Math.max(0, (trip.available_seats ?? 0) - reservation.seat_count);
@@ -128,7 +131,20 @@ export const deleteConversation = async () => wait({ message: 'Conversación eli
 export const deleteMessage = async () => wait({ message: 'Mensaje eliminado.' });
 export const markConversationAsRead = async () => wait({ message: 'Conversación marcada como leída.' });
 export class ChatWebSocket { connect() {} disconnect() {} sendMessage() {} }
-export const useChatWebSocket = () => { const [isConnected, setIsConnected] = useState(false); useEffect(() => { setIsConnected(true); }, []); return { isConnected, sendMessage: async () => undefined, lastMessage: null }; };
+export const useChatWebSocket = () => {
+  const [isConnected, setIsConnected] = useState(false);
+  useEffect(() => { setIsConnected(true); }, []);
+
+  // Mantener el mismo contrato que el WebSocket real. En modo demo no hay
+  // servidor al que notificar, pero la UI igualmente puede emitir el evento.
+  return {
+    isConnected,
+    sendMessage: async () => undefined,
+    sendTyping: (_isTyping: boolean) => undefined,
+    waitForConnection: async () => true,
+    lastMessage: null,
+  };
+};
 
 const wallet = () => ({ id: 'wallet-demo-1', user_id: currentUser.id, balance: walletBalance });
 export const getMyWallet = async () => wait(wallet());

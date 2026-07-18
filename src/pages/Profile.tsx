@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star, Mail, Car, LogOut, Phone, CheckCircle2, XCircle, Clock, Pencil, BadgeCheck, User, Wallet } from 'lucide-react';
+import { Star, Mail, Car, LogOut, Phone, CheckCircle2, XCircle, Clock, Pencil, BadgeCheck, User, Wallet, ShieldCheck, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
@@ -418,6 +418,24 @@ const Profile: React.FC = () => {
           )}
         </div>
       )}
+
+      {/* Disclaimers visibles desde el perfil */}
+      <section className="w-full bg-card rounded-2xl p-6 shadow-md mb-4 animate-slide-up" aria-labelledby="disclaimers-title">
+        <div className="mb-4">
+          <h3 id="disclaimers-title" className="text-lg font-display font-bold text-foreground">Descargos y condiciones</h3>
+          <p className="text-sm text-muted-foreground">Información importante antes de separar un viaje.</p>
+        </div>
+        <div className="space-y-3">
+          <div className="flex items-start gap-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 p-3">
+            <ShieldCheck className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <p className="text-sm text-foreground/90"><span className="font-semibold">Seguridad:</span> verifica la identidad del conductor, el vehículo y el punto de encuentro. La plataforma facilita el contacto, pero cada usuario debe tomar sus propias precauciones.</p>
+          </div>
+          <div className="flex items-start gap-3 rounded-xl bg-primary/5 p-3">
+            <CreditCard className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <p className="text-sm text-foreground/90"><span className="font-semibold">Pago anticipado:</span> para separar el viaje puede solicitarse el pago por adelantado. Revisa el monto, las condiciones de cancelación y conserva tu comprobante antes de confirmar.</p>
+          </div>
+        </div>
+      </section>
 
       {/* Logout Button */}
       <div className="mt-8 animate-fade-in">

@@ -25,7 +25,8 @@ import {
   Play,
   CircleCheck,
   Wallet,
-  UserCheck
+  UserCheck,
+  Baby
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -60,6 +61,7 @@ import { User, UserRole } from '@/types';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useWalkingRoute } from '@/hooks/useWalkingRoute';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoibGVzZWwiLCJhIjoiY21rcTMzZHZpMGx2dzNrb3FuanUxNjZ3cyJ9.QckkRB2ojiFgnJL9dLeVew';
 
@@ -79,6 +81,7 @@ const TripDetails: React.FC = () => {
   const [showReturnTripDialog, setShowReturnTripDialog] = useState(false);
   const [isDriverPopupOpen, setIsDriverPopupOpen] = useState(false);
   const [seatCount, setSeatCount] = useState(1);
+  const [childrenCount, setChildrenCount] = useState(0);
   const [liveRouteDuration, setLiveRouteDuration] = useState<number | null>(null);
   const [liveRouteDistance, setLiveRouteDistance] = useState<number | null>(null);
   const [isStartingTrip, setIsStartingTrip] = useState(false);
@@ -244,6 +247,7 @@ const TripDetails: React.FC = () => {
     // Resetear contador de asientos cuando cambia el viaje
     if (trip) {
       setSeatCount(1);
+      setChildrenCount(0);
     }
   }, [trip?.user_reservations, reservationStatus, trip]);
 
@@ -792,6 +796,7 @@ const TripDetails: React.FC = () => {
         {
           trip_id: trip.id,
           seat_count: seatCount,
+          children_count: Math.min(childrenCount, seatCount),
         },
         accessToken
       );
@@ -1185,6 +1190,14 @@ const TripDetails: React.FC = () => {
                                 {reservation.seat_count}
                               </span>
                             </div>
+                            {Number(reservation.children_count) > 0 && (
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm text-muted-foreground">Niños incluidos</span>
+                                <span className="font-semibold text-foreground">
+                                  {reservation.children_count}
+                                </span>
+                              </div>
+                            )}
                             <div className="flex items-center justify-between">
                               <span className="text-sm text-muted-foreground">Fecha de reserva</span>
                               <span className="font-semibold text-foreground">
@@ -1539,6 +1552,42 @@ const TripDetails: React.FC = () => {
               <p className="text-xs text-muted-foreground mt-2 text-center">
                 Máximo {trip.available_seats} asiento{trip.available_seats !== 1 ? 's' : ''} disponible{trip.available_seats !== 1 ? 's' : ''}
               </p>
+              <div className="flex items-start gap-3 mt-4 pt-3 border-t border-border">
+                <Checkbox
+                  id="travels-with-children"
+                  checked={childrenCount > 0}
+                  onCheckedChange={(checked) => setChildrenCount(checked ? 1 : 0)}
+                  aria-label="Viajo con niños"
+                />
+                <label htmlFor="travels-with-children" className="text-sm leading-5 cursor-pointer">
+                  <span className="font-medium text-foreground flex items-center gap-1.5">
+                    <Baby className="w-4 h-4 text-primary" />
+                    Viajo con niños
+                  </span>
+                  <span className="block text-xs text-muted-foreground mt-0.5">
+                    Avísale al conductor para coordinar un viaje adecuado.
+                  </span>
+                </label>
+              </div>
+              {childrenCount > 0 && (
+                <div className="flex items-center gap-2 mt-3">
+                  <label htmlFor="children-count" className="text-xs text-muted-foreground flex-1">
+                    ¿Cuántos niños?
+                  </label>
+                  <input
+                    id="children-count"
+                    type="number"
+                    min={1}
+                    max={seatCount}
+                    value={childrenCount}
+                    onChange={(event) => {
+                      const value = Number(event.target.value) || 1;
+                      setChildrenCount(Math.max(1, Math.min(value, seatCount)));
+                    }}
+                    className="w-16 h-9 px-2 text-center border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </div>
+              )}
             </div>
           )}
 
