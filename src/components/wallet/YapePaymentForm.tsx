@@ -18,15 +18,8 @@ const YapeLogo = () => (
   </svg>
 );
 
-const MP_PUBLIC_KEY = import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY as string;
-
 /**
- * Genera un token de Yape usando el endpoint oficial de MP.
- * Doc: POST https://api.mercadopago.com/platforms/pci/yape/v1/payment?public_key=...
- *
- * Números de prueba (credenciales TEST):
- *   111111111 + 123456 → approved
- *   111111113 + 123456 → insufficient_amount
+ * Genera un identificador local para el flujo de pago demo.
  */
 function uuid(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -36,27 +29,8 @@ function uuid(): string {
 }
 
 async function generateYapeToken(phoneNumber: string, otp: string): Promise<string> {
-  const res = await fetch(
-    `https://api.mercadopago.com/platforms/pci/yape/v1/payment?public_key=${encodeURIComponent(MP_PUBLIC_KEY)}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        phoneNumber,
-        otp,
-        requestId: uuid(),
-      }),
-    }
-  );
-
-  const data = await res.json();
-
-  if (!res.ok || !data.id) {
-    const cause = data.cause?.[0]?.description || data.message || 'Token no generado';
-    throw new Error(cause);
-  }
-
-  return data.id;
+  // Simulated token: no phone or OTP is sent to Mercado Pago.
+  return `demo-yape-${uuid()}-${phoneNumber.slice(-2)}-${otp.slice(-2)}`;
 }
 
 export const YapePaymentForm: React.FC<YapePaymentFormProps> = ({

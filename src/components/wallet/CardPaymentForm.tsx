@@ -11,8 +11,6 @@ interface CardPaymentFormProps {
   setIsProcessing: (v: boolean) => void;
 }
 
-const MP_PUBLIC_KEY = import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY as string;
-
 function formatCardNumber(value: string): string {
   return value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
 }
@@ -35,36 +33,8 @@ async function generateCardToken(params: {
   cardholderName: string;
   docNumber: string;
 }): Promise<{ id: string; payment_method_id: string }> {
-  const res = await fetch(
-    `https://api.mercadopago.com/v1/card_tokens?public_key=${encodeURIComponent(MP_PUBLIC_KEY)}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        card_number: params.cardNumber.replace(/\s/g, ''),
-        expiration_month: parseInt(params.expMonth, 10),
-        expiration_year: parseInt(
-          params.expYear.length === 2 ? `20${params.expYear}` : params.expYear,
-          10
-        ),
-        security_code: params.cvv,
-        cardholder: {
-          name: params.cardholderName,
-          identification: { type: 'DNI', number: params.docNumber },
-        },
-      }),
-    }
-  );
-
-  const data = await res.json();
-  if (!res.ok || !data.id) {
-    const cause = data.cause?.[0]?.description || data.message || 'Error generando token';
-    throw new Error(cause);
-  }
-  const paymentMethodId =
-    data.payment_method_id ||
-    data.payment_method?.id ||
-    detectCardBrand(params.cardNumber);
+  // No card data leaves this browser in demo mode.
+  const paymentMethodId = detectCardBrand(params.cardNumber);
 
   if (!paymentMethodId) {
     throw new Error(
@@ -72,7 +42,7 @@ async function generateCardToken(params: {
     );
   }
 
-  return { id: data.id, payment_method_id: paymentMethodId };
+  return { id: `demo-card-${Date.now()}`, payment_method_id: paymentMethodId };
 }
 
 export const CardPaymentForm: React.FC<CardPaymentFormProps> = ({

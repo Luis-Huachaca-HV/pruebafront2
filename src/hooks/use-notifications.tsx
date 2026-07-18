@@ -14,7 +14,7 @@ export function useNotificationsSocket(userId: string | null, token: string | nu
   useEffect(() => {
     if (!userId) return;
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL as string || '';
+    const backendUrl = '';
     const hostFromEnv = backendUrl.replace(/\/$/, '').replace(/^https?:\/\//, '');
     let proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
     if (backendUrl.startsWith('https://')) {

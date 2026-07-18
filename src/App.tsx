@@ -25,6 +25,7 @@ import TripDetails from "@/pages/TripDetails";
 import NotFound from "@/pages/NotFound";
 import Wallet from "@/pages/Wallet";
 import OAuthCallback from "@/pages/OAuthCallback";
+import { DemoControls } from '@/components/DemoControls';
 
 
 // Admin imports
@@ -115,6 +116,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <GlobalNotificationsListener />
+      <DemoControls />
       <TooltipProvider>
         <Toaster />
         <Sonner />

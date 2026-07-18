@@ -13,12 +13,12 @@ import { Input } from '../components/ui/input';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../hooks/use-toast';
-import { getPublishedTrips, TripResponse } from '../services/trips';
-import { createConversation } from '../services/chat';
+import { getPublishedTrips, TripResponse } from '@/services/trips';
+import { createConversation } from '@/services/chat';
 import { UserProfilePopup } from '../components/UserProfilePopup';
 import { useUserProfile, convertProfileToUser } from '../hooks/use-user-profile-cache';
 import { User } from '../types';
-import { getActiveAds, PublicAd } from '../services/ads';
+import { getActiveAds, PublicAd } from '@/services/ads';
 import MapboxLocationPicker from '../components/MapboxLocationPicker';
 import AddressAutocomplete from '../components/AddressAutocomplete';
 //import { toast } from "sonner";
@@ -424,7 +424,7 @@ const Search: React.FC = () => {
   const location = useLocation();
   const { accessToken, user } = useAuth();
   const { toast } = useToast();
-  const backendBaseUrl = useMemo(() => (import.meta.env.VITE_BACKEND_URL as string || '').replace(/\/$/, ''), []);
+  const backendBaseUrl = useMemo(() => '', []);
 
   // ── Carga de datos (backend → RPC search_published_trips) ─────────────────────
 
@@ -767,7 +767,7 @@ const Search: React.FC = () => {
             {activeAds.map((ad, index) => {
               let finalImageUrl = ad.image_url;
               if (finalImageUrl?.startsWith('/')) {
-                const backend = (import.meta.env.VITE_BACKEND_URL as string || '').replace(/\/$/, '');
+                const backend = '';
                 finalImageUrl = `${backend}${finalImageUrl}`.replace(/^http:\/\//i, 'https://');
               }
               return (

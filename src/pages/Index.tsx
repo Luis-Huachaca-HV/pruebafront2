@@ -131,7 +131,7 @@ const Index = () => {
       {/* SECCIÓN 1: HERO */}
       <section className="relative min-h-[72vh] sm:min-h-[85vh] flex items-center justify-center bg-[#81638b] overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2070"
+          src="/trip-facebook-cover.png"
           className="absolute inset-0 w-full h-full object-cover opacity-30"
           alt="Viaje divertido"
         />
@@ -267,7 +267,7 @@ const Index = () => {
             <div className="flex-1 relative">
               <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#9ce0db] rounded-full blur-[80px] opacity-40"></div>
               <img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1049"
+                src="/sumac-travel-logo.jpeg"
                 className="rounded-[3rem] shadow-2xl relative z-10 w-full object-cover h-[500px] border-8 border-white"
                 alt="Comunidad feliz"
               />

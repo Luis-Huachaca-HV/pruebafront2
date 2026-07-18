@@ -52,7 +52,7 @@ export function useDriverLiveMode(
     }
 
     const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const hostFromEnv = (import.meta.env.VITE_BACKEND_URL as string || '')
+    const hostFromEnv = ''
       .replace(/\/$/, '')
       .replace(/^https?:\/\//, '');
 

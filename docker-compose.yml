@@ -1,0 +1,12 @@
+services:
+  frontend-demo:
+    build:
+      context: .
+      target: builder
+    command: sh -c "npm ci --legacy-peer-deps && npm run dev -- --host 0.0.0.0 --port 80"
+    ports:
+      - "3002:80"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped

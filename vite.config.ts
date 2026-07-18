@@ -15,8 +15,10 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+    alias: [
+      // The collaborative repository never bundles the live API clients.
+      { find: /^@\/services\/.*$/, replacement: path.resolve(__dirname, './src/mocks/services/index.ts') },
+      { find: '@', replacement: path.resolve(__dirname, './src') },
+    ],
   },
 }));
