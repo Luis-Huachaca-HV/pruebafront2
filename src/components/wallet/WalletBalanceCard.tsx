@@ -8,15 +8,15 @@ interface WalletBalanceCardProps {
 
 export const WalletBalanceCard: React.FC<WalletBalanceCardProps> = ({ balance, onRechargeClick }) => {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 rounded-[2rem] p-6 shadow-xl text-white">
+    <div className="relative overflow-hidden bg-gradient-to-br from-[#0B1D3A] via-[#163B67] to-[#0F2A4D] rounded-[2rem] p-6 shadow-xl text-white">
       {/* Decorative blurred circles for Glassmorphism feel */}
       <div className="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl"></div>
-      <div className="absolute bottom-0 left-0 -mb-8 -ml-8 w-24 h-24 bg-pink-500 opacity-20 rounded-full blur-xl"></div>
-      
+      <div className="absolute bottom-0 left-0 -mb-8 -ml-8 w-24 h-24 bg-[#F97316] opacity-20 rounded-full blur-xl"></div>
+
       <div className="relative z-10 flex flex-col justify-between h-full min-h-[160px]">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2 text-indigo-100">
+          <div className="flex items-center gap-2 text-blue-100">
             <WalletIcon className="w-6 h-6 opacity-80" />
             <span className="text-sm font-medium tracking-wide uppercase tracking-widest opacity-80">
               Mi Balance

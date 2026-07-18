@@ -124,7 +124,7 @@ const LocationSearchInput: React.FC<{
           }`}
         title="Seleccionar en mapa"
       >
-        <MapPin className="w-4 h-4 text-[#8c6df5]" />
+        <MapPin className="w-4 h-4 text-[#EA580C]" />
       </button>
 
       {/* Modal del mapa — solo se monta cuando el usuario lo abre */}
@@ -745,17 +745,17 @@ const Search: React.FC = () => {
   // ── Render ────────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-[#f8f9fe] flex flex-col font-sans pb-24">
+    <div className="min-h-screen bg-[#F4F8FC] flex flex-col font-sans pb-24">
 
 
       {/* Top Header estilo App */}
       <div className="flex items-center justify-between px-4 py-5 bg-transparent">
         <button onClick={() => navigate(-1)} className="p-1" aria-label="Volver">
-          <ChevronLeft className="w-6 h-6 text-black" />
+          <ChevronLeft className="w-6 h-6 text-[#0F2A4D]" />
         </button>
-        <h1 className="text-xl font-medium text-black">Buscador de Viajes</h1>
+        <h1 className="text-xl font-black text-[#0F2A4D]">Buscador de Viajes</h1>
         <button className="p-1" aria-label="Filtrar">
-          <Filter className="w-6 h-6 text-black" />
+          <Filter className="w-6 h-6 text-[#0F2A4D]" />
         </button>
       </div>
 
@@ -775,19 +775,21 @@ const Search: React.FC = () => {
                   key={ad.id}
                   className={`${index === currentAdIndex ? 'block' : 'hidden'} w-full h-48 sm:h-56 relative rounded-2xl overflow-hidden shadow-sm border border-border/50`}
                 >
-                  <a
-                    href={ad.link_url || '#'}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => { if (!ad.link_url) e.preventDefault(); }}
-                    className="block w-full h-full"
+                  <button
+                    type="button"
+                    onClick={() => ad.link_url && navigate(ad.link_url)}
+                    className="block w-full h-full text-left"
                   >
                     <img
                       src={finalImageUrl}
                       alt={ad.title}
                       className="w-full h-full object-cover"
                     />
-                  </a>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F2A4D]/85 via-[#0F2A4D]/10 to-transparent" />
+                    <p className="absolute bottom-4 left-4 right-4 text-white font-black text-lg leading-tight drop-shadow">
+                      {ad.title}
+                    </p>
+                  </button>
                 </div>
               );
             })}
@@ -800,7 +802,7 @@ const Search: React.FC = () => {
                     type="button"
                     aria-label={`Ir al anuncio ${index + 1}`}
                     onClick={() => setCurrentAdIndex(index)}
-                    className={`h-2 rounded-full transition-all ${index === currentAdIndex ? 'w-6 bg-[#9f84f7]' : 'w-2 bg-[#d3c6ff]'}`}
+                    className={`h-2 rounded-full transition-all ${index === currentAdIndex ? 'w-6 bg-[#F97316]' : 'w-2 bg-[#DCE8F5]'}`}
                   />
                 ))}
               </div>
@@ -810,10 +812,10 @@ const Search: React.FC = () => {
 
         {/* Banner: viaje de regreso */}
         {isReturnTrip && (
-          <div className="mb-4 flex items-center gap-3 rounded-2xl bg-[#cebfff]/30 border border-[#cebfff] px-4 py-3 animate-fade-in">
-            <ArrowRight className="w-4 h-4 text-[#8c6df5] shrink-0" />
+          <div className="mb-4 flex items-center gap-3 rounded-2xl bg-[#DCE8F5]/30 border border-[#DCE8F5] px-4 py-3 animate-fade-in">
+            <ArrowRight className="w-4 h-4 text-[#EA580C] shrink-0" />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-[#8c6df5] leading-tight">Buscando viaje de regreso</p>
+              <p className="text-sm font-medium text-[#EA580C] leading-tight">Buscando viaje de regreso</p>
               <p className="text-xs text-gray-600 truncate">
                 {origin.display || ''} → {destination.display || ''}
               </p>
@@ -829,7 +831,7 @@ const Search: React.FC = () => {
         )}
 
         {/* Core Query Card */}
-        <div className="bg-[#cebfff] p-4 rounded-[28px] shadow-sm mb-4 relative animate-slide-up">
+        <div className="bg-[#DCE8F5] p-4 rounded-[28px] shadow-sm mb-4 relative animate-slide-up">
           <form onSubmit={(e) => { e.preventDefault(); handleSearch(); }} className="space-y-3">
 
             {/* Origen */}
@@ -878,7 +880,7 @@ const Search: React.FC = () => {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="flex-1 bg-[#9f84f7] hover:bg-[#8c6df5] text-white rounded-xl h-12 font-medium text-sm shadow-sm"
+                className="flex-1 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-xl h-12 font-medium text-sm shadow-sm"
               >
                 {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Buscar Viaje'}
               </Button>
@@ -891,7 +893,7 @@ const Search: React.FC = () => {
 
                 {/* Hora */}
                 <div className="flex-1 min-w-[120px]">
-                  <label className="text-[11px] font-semibold text-[#6a529b] uppercase tracking-wide mb-1 block">
+                  <label className="text-[11px] font-semibold text-[#163B67] uppercase tracking-wide mb-1 block">
                     Hora (Opc.)
                   </label>
                   <div className="bg-white/80 rounded-xl flex items-center px-3 shadow-sm h-10">
@@ -907,7 +909,7 @@ const Search: React.FC = () => {
 
                 {/* Asientos */}
                 <div>
-                  <label className="text-[11px] font-semibold text-[#6a529b] uppercase tracking-wide mb-1 block">
+                  <label className="text-[11px] font-semibold text-[#163B67] uppercase tracking-wide mb-1 block">
                     Asientos
                   </label>
                   <div className="flex items-center gap-2 h-10 bg-white/80 rounded-xl px-2 shadow-sm">
@@ -937,7 +939,7 @@ const Search: React.FC = () => {
               {/* Tolerancia */}
               {time ? (
                 <div>
-                  <label className="text-[11px] font-semibold text-[#6a529b] uppercase tracking-wide mb-1 block">
+                  <label className="text-[11px] font-semibold text-[#163B67] uppercase tracking-wide mb-1 block">
                     Tolerancia horaria
                   </label>
                   <div className="flex gap-2">
@@ -947,8 +949,8 @@ const Search: React.FC = () => {
                         type="button"
                         onClick={() => setTimeTolerance(opt.value)}
                         className={`flex-1 py-1.5 rounded-full text-xs font-medium transition-all ${timeTolerance === opt.value
-                          ? 'bg-[#9f84f7] text-white'
-                          : 'bg-white/50 text-[#6a529b]'
+                          ? 'bg-[#F97316] text-white'
+                          : 'bg-white/50 text-[#163B67]'
                           }`}
                       >
                         {opt.label}
@@ -958,7 +960,7 @@ const Search: React.FC = () => {
                 </div>
               ) : !date && (
                 <label className="flex items-center justify-between gap-3 cursor-pointer bg-white/40 rounded-xl px-3 py-2">
-                  <span className="text-sm font-medium text-[#6a529b]">
+                  <span className="text-sm font-medium text-[#163B67]">
                     Solo próximas 24 h
                   </span>
                   <button
@@ -966,7 +968,7 @@ const Search: React.FC = () => {
                     role="switch"
                     aria-checked={nextDepartureOnly}
                     onClick={() => setNextDepartureOnly(!nextDepartureOnly)}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full p-0.5 overflow-hidden transition-colors ${nextDepartureOnly ? 'bg-[#9f84f7]' : 'bg-white/80'
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full p-0.5 overflow-hidden transition-colors ${nextDepartureOnly ? 'bg-[#F97316]' : 'bg-white/80'
                       }`}
                   >
                     <span className={`h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${nextDepartureOnly ? 'translate-x-5' : 'translate-x-0'
@@ -1019,7 +1021,7 @@ const Search: React.FC = () => {
         {/* Resultados */}
         <div ref={resultsSectionRef} className="animate-slide-up">
           {!isLoading && (
-            <h2 className="text-lg font-semibold text-[#81638b] mb-1">
+            <h2 className="text-lg font-semibold text-[#0F2A4D] mb-1">
               Viajes Disponibles
             </h2>
           )}
@@ -1054,7 +1056,7 @@ const Search: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleClearAll()}
-                  className="mt-5 rounded-full border-2 border-[#81638b] bg-transparent text-[#81638b] px-6 py-2 font-semibold hover:bg-[#81638b] hover:text-white transition-all"
+                  className="mt-5 rounded-full border-2 border-[#0F2A4D] bg-transparent text-[#0F2A4D] px-6 py-2 font-semibold hover:bg-[#0F2A4D] hover:text-white transition-all"
                 >
                   Limpiar filtros
                 </button>
@@ -1081,7 +1083,7 @@ const Search: React.FC = () => {
 
                       {/* IZQUIERDA (Conductor)*/}
                       <div className="flex flex-col items-center w-[70px] border-r border-gray-200 pr-3 ">
-                        <div className="w-12 h-12 bg-[#f3efff] rounded-full flex items-center justify-center shadow-sm">
+                        <div className="w-12 h-12 bg-[#DCE8F5] rounded-full flex items-center justify-center shadow-sm">
                           {avatarSrc ? (
                             <img
                               src={avatarSrc}
@@ -1089,7 +1091,7 @@ const Search: React.FC = () => {
                               className="w-12 h-12 rounded-full object-cover"
                             />
                           ) : (
-                            <span className="text-lg font-bold text-[#9f84f7]">
+                            <span className="text-lg font-bold text-[#F97316]">
                               {trip.driver?.name?.charAt(0) || 'X'}
                             </span>
                           )}
@@ -1117,7 +1119,7 @@ const Search: React.FC = () => {
                             {trip.origin_name.split(',')[0]}
                           </h3>
 
-                          <ArrowRight className="w-4 h-4 text-[#9f84f7] opacity-60 flex-shrink-0" />
+                          <ArrowRight className="w-4 h-4 text-[#F97316] opacity-60 flex-shrink-0" />
 
                           <h3 className="text-[15px] font-bold text-slate-800 leading-tight truncate">
                             {trip.destination_name.split(',')[0]}
@@ -1140,14 +1142,14 @@ const Search: React.FC = () => {
                       <div className="w-[100px] flex flex-col items-center justify-between py-2 px-2">
 
                         {/* PRECIO */}
-                        <div className="bg-[#9f84f7] px-3 py-1 rounded-lg shadow-sm">
+                        <div className="bg-[#F97316] px-3 py-1 rounded-lg shadow-sm">
                           <p className="text-[13px] font-black text-white">
                             S/ {trip.price_per_seat ?? '0'}
                           </p>
                         </div>
                         {/* ASIENTOS: */}
                         <div className="flex items-center gap-1 text-slate-600 mt-2">
-                          <Users className="w-3 h-3 text-[#9f84f7]" />
+                          <Users className="w-3 h-3 text-[#F97316]" />
                           <span className="text-[12px] font-bold">
                             {trip.available_seats} asientos
                           </span>
@@ -1158,7 +1160,7 @@ const Search: React.FC = () => {
                             e.stopPropagation();
                             handleContactDriver(trip.driver_id, trip.id);
                           }}
-                          className="mt-2 border border-[#9f84f7] text-[#9f84f7] px-3 py-1 rounded-full text-[11px] font-bold hover:bg-[#9f84f7] hover:text-white transition-all shadow-sm"
+                          className="mt-2 border border-[#F97316] text-[#F97316] px-3 py-1 rounded-full text-[11px] font-bold hover:bg-[#F97316] hover:text-white transition-all shadow-sm"
                         >
                           Contactar
                         </button>

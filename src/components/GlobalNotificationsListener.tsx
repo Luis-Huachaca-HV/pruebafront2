@@ -4,17 +4,30 @@
  */
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { chatKeys, PaginatedConversationsResponse } from '@/hooks/use-chat-cache';
-import type { ConversationType, ConversationWithMessagesResponse } from '@/services/chat';
+import { chatKeys } from '@/hooks/use-chat-cache';
+import type { ConversationType, ConversationWithMessagesResponse, PaginatedConversationsResponse } from '@/services/chat';
+import { useToast } from '@/hooks/use-toast';
 
 export const GlobalNotificationsListener: React.FC = () => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handler = (ev: Event) => {
       // @ts-ignore
       const payload = ev?.detail;
       if (!payload) return;
+
+      // Nueva reserva confirmada en uno de mis viajes (notificación para conductores)
+      if (payload.type === 'reservation_confirmed') {
+        const { passenger_name, seat_count, origin_name, destination_name } = payload;
+        const seats = seat_count > 1 ? `${seat_count} asientos` : `${seat_count} asiento`;
+        toast({
+          title: '¡Nueva reserva en tu viaje! 🚗',
+          description: `${passenger_name || 'Un pasajero'} reservó ${seats}${origin_name && destination_name ? ` en ${origin_name} → ${destination_name}` : ''}.`,
+        });
+        return;
+      }
 
       // Manejar cambio de tipo de conversación
       if (payload.type === 'conversation_type_changed') {
@@ -95,7 +108,7 @@ export const GlobalNotificationsListener: React.FC = () => {
     return () => {
       window.removeEventListener('app:notification', handler as EventListener);
     };
-  }, [queryClient]);
+  }, [queryClient, toast]);
 
   return null;
 };

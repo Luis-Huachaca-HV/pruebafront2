@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "composite": true,
+    "ignoreDeprecations": "5.0",
     "types": ["vitest/globals"],
     "target": "ES2020",
     "useDefineForClassFields": true,

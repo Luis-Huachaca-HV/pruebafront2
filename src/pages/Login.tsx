@@ -69,7 +69,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f6ff] flex flex-col items-center justify-center px-6 py-8">
+    <div className="min-h-screen bg-[#F4F8FC] flex flex-col items-center justify-center px-6 py-8">
       <BrandHeader subtitle="Comparte el viaje" className="mb-8" />
 
       {/* Card */}
@@ -101,7 +101,7 @@ const Login: React.FC = () => {
           <div className="space-y-2">
             <div className="flex justify-between items-center px-1">
               <label className="text-sm font-semibold text-slate-600">Contraseña</label>
-              <Link to="/forgot-password" className="text-xs text-slate-400 hover:text-[#9f84f7]">
+              <Link to="/forgot-password" className="text-xs text-slate-400 hover:text-[#F97316]">
                 ¿Olvidé mi clave?
               </Link>
             </div>
@@ -129,7 +129,7 @@ const Login: React.FC = () => {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full py-7 bg-[#9f84f7] hover:bg-[#8c6df5] text-white rounded-2xl text-lg font-bold flex items-center justify-center gap-2"
+            className="w-full py-7 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-2xl text-lg font-bold flex items-center justify-center gap-2"
           >
             {isLoading ? "Cargando..." : "Iniciar Sesión"}
             {!isLoading && <ArrowRight />}
@@ -167,7 +167,7 @@ const Login: React.FC = () => {
       {/* Footer */}
       <p className="mt-8 text-sm text-slate-500">
         ¿No tienes cuenta?{' '}
-        <Link to="/register" className="font-bold text-[#9f84f7] hover:underline">
+        <Link to="/register" className="font-bold text-[#F97316] hover:underline">
           Crear cuenta
         </Link>
       </p>

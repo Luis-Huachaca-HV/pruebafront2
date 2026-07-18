@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import { login as mockLogin, register as mockRegister } from '@/services/auth';
+import { getConversations } from '@/services/chat';
 import type { User, Vehicle } from '@/types';
 
 interface AuthContextType {
@@ -32,6 +33,7 @@ const toUser = (raw: any): User => ({
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [unreadConversationsCount, setUnreadConversationsCount] = useState(0);
 
   useEffect(() => {
     try {
@@ -40,6 +42,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } finally {
       setIsLoading(false);
     }
+  }, []);
+
+  // Cuenta real de conversaciones con mensajes sin leer (no un valor fijo)
+  useEffect(() => {
+    if (!user) {
+      setUnreadConversationsCount(0);
+      return;
+    }
+    getConversations()
+      .then(({ conversations }) => {
+        setUnreadConversationsCount(conversations.filter((c: any) => c.unread_count > 0).length);
+      })
+      .catch(() => setUnreadConversationsCount(0));
+  }, [user]);
+
+  // GlobalNotificationsListener recalcula esto cuando llega un mensaje nuevo
+  useEffect(() => {
+    const handler = (ev: Event) => {
+      const detail = (ev as CustomEvent<{ count: number }>).detail;
+      if (detail && typeof detail.count === 'number') {
+        setUnreadConversationsCount(detail.count);
+      }
+    };
+    window.addEventListener('app:unread-conversations-count', handler);
+    return () => window.removeEventListener('app:unread-conversations-count', handler);
   }, []);
 
   const save = useCallback((next: User) => {
@@ -73,7 +100,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   return <AuthContext.Provider value={{
     user, isAuthenticated: Boolean(user), isLoading, isGoogleUser: false,
-    accessToken: user ? TOKEN : null, unreadConversationsCount: 1,
+    accessToken: user ? TOKEN : null, unreadConversationsCount,
     login, loginWithGoogleToken, register, logout, updateVehicle, updateUser,
   }}>{children}</AuthContext.Provider>;
 };

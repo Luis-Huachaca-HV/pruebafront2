@@ -302,18 +302,18 @@ const Register: React.FC = () => {
                 required
                 minLength={8}
                 className={`transition-all duration-200 focus:scale-[1.01] focus:shadow-md ${name.length > 0 && !isNameValid
-                  ? 'border-[#81638b]'
+                  ? 'border-[#0F2A4D]'
                   : name.length > 0 && isNameValid
-                    ? 'border-[#5dc1b9]'
+                    ? 'border-[#F97316]'
                     : ''
                   }`}
               />
               {name.length > 0 && (
                 <div className="absolute right-4 top-1/2 -translate-y-1/2">
                   {isNameValid ? (
-                    <Check className="w-5 h-5 text-[#5dc1b9] animate-in zoom-in-50 duration-200" />
+                    <Check className="w-5 h-5 text-[#F97316] animate-in zoom-in-50 duration-200" />
                   ) : (
-                    <X className="w-5 h-5 text-[#81638b] opacity-80 animate-in zoom-in-50 duration-200" />
+                    <X className="w-5 h-5 text-[#0F2A4D] opacity-80 animate-in zoom-in-50 duration-200" />
                   )}
                 </div>
               )}
@@ -325,29 +325,29 @@ const Register: React.FC = () => {
                 {/* Solo mostrar contador si no se ha alcanzado el mínimo */}
                 {!nameValidations.minLength && (
                   <div className="flex items-center gap-2 text-xs">
-                    <X className="w-4 h-4 text-[#81638b]" />
-                    <span className="text-[#81638b]">
+                    <X className="w-4 h-4 text-[#0F2A4D]" />
+                    <span className="text-[#0F2A4D]">
                       Mínimo 8 caracteres ({name.trim().length}/8)
                     </span>
                   </div>
                 )}
                 <div className="flex items-center gap-2 text-xs">
                   {nameValidations.onlyLettersAndSpaces ? (
-                    <Check className="w-4 h-4 text-[#5dc1b9]" />
+                    <Check className="w-4 h-4 text-[#F97316]" />
                   ) : (
-                    <X className="w-4 h-4 text-[#81638b]" />
+                    <X className="w-4 h-4 text-[#0F2A4D]" />
                   )}
-                  <span className={nameValidations.onlyLettersAndSpaces ? 'text-[#5dc1b9]' : 'text-[#81638b]'}>
+                  <span className={nameValidations.onlyLettersAndSpaces ? 'text-[#F97316]' : 'text-[#0F2A4D]'}>
                     Solo letras y espacios
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
                   {nameValidations.noTrailingSpace ? (
-                    <Check className="w-4 h-4 text-[#5dc1b9]" />
+                    <Check className="w-4 h-4 text-[#F97316]" />
                   ) : (
-                    <X className="w-4 h-4 text-[#81638b]" />
+                    <X className="w-4 h-4 text-[#0F2A4D]" />
                   )}
-                  <span className={nameValidations.noTrailingSpace ? 'text-[#5dc1b9]' : 'text-[#81638b]'}>
+                  <span className={nameValidations.noTrailingSpace ? 'text-[#F97316]' : 'text-[#0F2A4D]'}>
                     Sin espacios al final
                   </span>
                 </div>
@@ -367,18 +367,18 @@ const Register: React.FC = () => {
                 required
                 className={
                   email.length > 0 && !isEmailValid
-                    ? 'border-[#81638b] pr-12'
+                    ? 'border-[#0F2A4D] pr-12'
                     : email.length > 0 && isEmailValid
-                      ? 'border-[#5dc1b9] pr-12'
+                      ? 'border-[#F97316] pr-12'
                       : ''
                 }
               />
               {email.length > 0 && (
                 <div className="absolute right-4 top-1/2 -translate-y-1/2">
                   {!isEmailValid ? (
-                    <X className="w-5 h-5 text-[#81638b] opacity-80 animate-in zoom-in-50 duration-200" />
+                    <X className="w-5 h-5 text-[#0F2A4D] opacity-80 animate-in zoom-in-50 duration-200" />
                   ) : (
-                    <Check className="w-5 h-5 text-[#5dc1b9] animate-in zoom-in-50 duration-200" />
+                    <Check className="w-5 h-5 text-[#F97316] animate-in zoom-in-50 duration-200" />
                   )}
                 </div>
               )}
@@ -397,18 +397,18 @@ const Register: React.FC = () => {
                 minLength={10}
                 maxLength={64}
                 className={`transition-all duration-200 focus:scale-[1.01] focus:shadow-md ${password.length > 0 && !isPasswordValid
-                  ? 'border-[#81638b] pr-24'
+                  ? 'border-[#0F2A4D] pr-24'
                   : password.length > 0 && isPasswordValid
-                    ? 'border-[#5dc1b9] pr-24'
+                    ? 'border-[#F97316] pr-24'
                     : 'pr-24'
                   }`}
               />
               <div className="absolute right-12 top-1/2 -translate-y-1/2">
                 {password.length > 0 &&
                   (isPasswordValid ? (
-                    <Check className="w-5 h-5 text-[#5dc1b9] animate-in zoom-in-50 duration-200" />
+                    <Check className="w-5 h-5 text-[#F97316] animate-in zoom-in-50 duration-200" />
                   ) : (
-                    <X className="w-5 h-5 text-[#81638b] opacity-80 animate-in zoom-in-50 duration-200" />
+                    <X className="w-5 h-5 text-[#0F2A4D] opacity-80 animate-in zoom-in-50 duration-200" />
                   ))}
               </div>
               <button
@@ -425,13 +425,13 @@ const Register: React.FC = () => {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-muted-foreground">Fortaleza:</span>
-                  <span className={`font-medium ${password.length >= 10 && password.length < 15 ? 'text-[#81638b]' : password.length >= 15 && password.length < 20 ? 'text-blue-500' : password.length >= 20 ? 'text-[#5dc1b9]' : 'text-[#81638b]'}`}>
+                  <span className={`font-medium ${password.length >= 10 && password.length < 15 ? 'text-[#0F2A4D]' : password.length >= 15 && password.length < 20 ? 'text-blue-500' : password.length >= 20 ? 'text-[#F97316]' : 'text-[#0F2A4D]'}`}>
                     {getPasswordStrengthText()}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between mt-2 px-2 py-2 rounded-xl bg-[#dac9df]/40">
-                  <span className="text-xs font-medium text-[#81638b]">
+                <div className="flex items-center justify-between mt-2 px-2 py-2 rounded-xl bg-[#DCE8F5]/40">
+                  <span className="text-xs font-medium text-[#0F2A4D]">
                     Fortaleza: {getPasswordStrengthText()}
                   </span>
                   {/* Indicador visual */}
@@ -450,7 +450,7 @@ const Register: React.FC = () => {
                     ))}
                   </div>
                   <div className={`flex items-center justify-between mt-2 px-2 py-2 rounded-xl 
-                    ${passwordStrength < 40 ? 'bg-[#81638b]/20' : passwordStrength < 70 ? 'bg-[#b695c0]/20' : 'bg-[#5dc1b9]/20'}`}>
+                    ${passwordStrength < 40 ? 'bg-[#0F2A4D]/20' : passwordStrength < 70 ? 'bg-[#2F5C94]/20' : 'bg-[#F97316]/20'}`}>
                     <div className={`h-2 rounded-full transition-all duration-300 ${getPasswordStrengthColor()}`} style={{ width: `${passwordStrength}%` }}></div>
                   </div>
                 </div>
@@ -463,55 +463,55 @@ const Register: React.FC = () => {
                 {/* Solo mostrar contador si no se ha alcanzado el mínimo */}
                 {!passwordValidations.minLength && (
                   <div className="flex items-center gap-2 text-xs">
-                    <X className="w-4 h-4 text-[#81638b]" />
-                    <span className="text-[#81638b]">
+                    <X className="w-4 h-4 text-[#0F2A4D]" />
+                    <span className="text-[#0F2A4D]">
                       Mínimo 10 caracteres ({password.length}/10)
                     </span>
                   </div>
                 )}
                 <div className="flex items-center gap-2 text-xs">
                   {passwordValidations.hasUpperCase ? (
-                    <Check className="w-4 h-4 text-[#5dc1b9]" />
+                    <Check className="w-4 h-4 text-[#F97316]" />
                   ) : (
-                    <X className="w-4 h-4 text-[#81638b]" />
+                    <X className="w-4 h-4 text-[#0F2A4D]" />
                   )}
-                  <span className={passwordValidations.hasUpperCase ? 'text-[#5dc1b9]' : 'text-[#81638b]'}>
+                  <span className={passwordValidations.hasUpperCase ? 'text-[#F97316]' : 'text-[#0F2A4D]'}>
                     Al menos una mayúscula
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
                   {passwordValidations.hasLowerCase ? (
-                    <Check className="w-4 h-4 text-[#5dc1b9]" />
+                    <Check className="w-4 h-4 text-[#F97316]" />
                   ) : (
-                    <X className="w-4 h-4 text-[#81638b]" />
+                    <X className="w-4 h-4 text-[#0F2A4D]" />
                   )}
-                  <span className={passwordValidations.hasLowerCase ? 'text-[#5dc1b9]' : 'text-[#81638b]'}>
+                  <span className={passwordValidations.hasLowerCase ? 'text-[#F97316]' : 'text-[#0F2A4D]'}>
                     Al menos una minúscula
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
                   {passwordValidations.hasNumber ? (
-                    <Check className="w-4 h-4 text-[#5dc1b9]" />
+                    <Check className="w-4 h-4 text-[#F97316]" />
                   ) : (
-                    <X className="w-4 h-4 text-[#81638b]" />
+                    <X className="w-4 h-4 text-[#0F2A4D]" />
                   )}
-                  <span className={passwordValidations.hasNumber ? 'text-[#5dc1b9]' : 'text-[#81638b]'}>
+                  <span className={passwordValidations.hasNumber ? 'text-[#F97316]' : 'text-[#0F2A4D]'}>
                     Al menos un número
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
-                  <Check className="w-4 h-4 text-[#5dc1b9]" />
-                  <span className="text-[#5dc1b9]">
+                  <Check className="w-4 h-4 text-[#F97316]" />
+                  <span className="text-[#F97316]">
                     Espacios permitidos
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
                   {passwordValidations.noTrailingSpace ? (
-                    <Check className="w-4 h-4 text-[#5dc1b9]" />
+                    <Check className="w-4 h-4 text-[#F97316]" />
                   ) : (
-                    <X className="w-4 h-4 text-[#81638b]" />
+                    <X className="w-4 h-4 text-[#0F2A4D]" />
                   )}
-                  <span className={passwordValidations.noTrailingSpace ? 'text-[#5dc1b9]' : 'text-[#81638b]'}>
+                  <span className={passwordValidations.noTrailingSpace ? 'text-[#F97316]' : 'text-[#0F2A4D]'}>
                     Sin espacios al final
                   </span>
                 </div>
@@ -529,24 +529,24 @@ const Register: React.FC = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 className={`transition-all duration-200 focus:scale-[1.01] focus:shadow-md ${confirmPassword.length > 0 && password !== confirmPassword
-                  ? 'border-[#81638b] pr-12'
+                  ? 'border-[#0F2A4D] pr-12'
                   : confirmPassword.length > 0 && password === confirmPassword
-                    ? 'border-[#5dc1b9] pr-12'
+                    ? 'border-[#F97316] pr-12'
                     : ''
                   }`}
               />
               {confirmPassword.length > 0 && (
                 <div className="absolute right-4 top-1/2 -translate-y-1/2">
                   {password === confirmPassword ? (
-                    <Check className="w-5 h-5 text-[#5dc1b9] animate-in zoom-in-50 duration-200" />
+                    <Check className="w-5 h-5 text-[#F97316] animate-in zoom-in-50 duration-200" />
                   ) : (
-                    <X className="w-5 h-5 text-[#81638b] opacity-80 animate-in zoom-in-50 duration-200" />
+                    <X className="w-5 h-5 text-[#0F2A4D] opacity-80 animate-in zoom-in-50 duration-200" />
                   )}
                 </div>
               )}
             </div>
             {confirmPassword.length > 0 && password !== confirmPassword && (
-              <p className="text-xs text-[#81638b]">
+              <p className="text-xs text-[#0F2A4D]">
                 Las contraseñas no coinciden
               </p>
             )}

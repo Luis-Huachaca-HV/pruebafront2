@@ -14,7 +14,7 @@ interface RouteMapDisplayProps {
 const RouteMapDisplay: React.FC<RouteMapDisplayProps> = ({ originCoords = [-71.537, -16.409], destinationCoords = [-72.711, -16.624], originName, destinationName, onRouteConfirmed, selectedStops = [], onStopsChange, simpleMode = false }) => {
   const route: RouteOption = { id: 'demo-route', geometry: { type: 'LineString', coordinates: [originCoords, destinationCoords] }, duration: 180 * 60, distance: 173000, summary: 'Ruta demo Arequipa – Camaná' };
   useEffect(() => { if (simpleMode) onRouteConfirmed?.(route, selectedStops); }, []);
-  return <section className="rounded-xl border bg-gradient-to-br from-sky-50 to-violet-50 p-5 text-sm">
+  return <section className="rounded-xl border bg-gradient-to-br from-sky-50 to-blue-50 p-5 text-sm">
     <div className="mb-4 flex items-center gap-2 font-semibold"><Navigation className="h-5 w-5 text-primary" />Vista de ruta demo (sin conexión)</div>
     <div className="space-y-3">
       <p className="flex gap-2"><MapPin className="h-4 w-4 text-green-600" /><span><b>Origen:</b> {originName}</span></p>

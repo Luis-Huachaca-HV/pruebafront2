@@ -100,7 +100,7 @@ export const TripManager: React.FC<TripManagerProps> = ({ trip, isOpen, onClose,
     
     try {
       setProcessingId(reservationId);
-      await approveReservation(reservationId, accessToken);
+      await approveReservation(reservationId);
       await loadReservations();
       onUpdate();
       toast({
@@ -124,7 +124,7 @@ export const TripManager: React.FC<TripManagerProps> = ({ trip, isOpen, onClose,
     
     try {
       setProcessingId(reservationId);
-      await rejectReservation(reservationId, accessToken);
+      await rejectReservation(reservationId);
       await loadReservations();
       onUpdate();
       toast({
@@ -229,7 +229,7 @@ export const TripManager: React.FC<TripManagerProps> = ({ trip, isOpen, onClose,
         description: editDescription || undefined,
       };
 
-      const updatedTrip = await updateTrip(currentTrip.id, updateData, accessToken);
+      const updatedTrip = await updateTrip(currentTrip.id, updateData);
       setCurrentTrip(updatedTrip);
       setIsEditing(false);
       if (onTripUpdated) {

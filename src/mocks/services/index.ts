@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DEMO_TOKEN, demoConversations, demoMessages, demoReservations, demoTrips, demoUsers, demoVehicle, getDemoUser, id, wait } from '@/mocks/store';
+import { DEMO_TOKEN, demoConversations, demoMessages, demoNotifications, demoReservations, demoTrips, demoUsers, demoVehicle, getDemoUser, id, wait } from '@/mocks/store';
 
 export type LoginRequest = any; export type RegisterRequest = any; export type AuthResponse = any;
 export type UserResponse = any; export type UserProfileResponse = any; export type UserListItem = any; export type UserReviewSummary = any; export type UserCreate = any; export type UserUpdate = any;
@@ -14,6 +14,40 @@ let currentUser = getDemoUser();
 let walletBalance = 120;
 const transactions: any[] = [{ id: 'transaction-demo-1', wallet_id: 'wallet-demo-1', amount: 120, transaction_type: 'credit', description: 'Saldo de bienvenida', reference_id: null, created_at: new Date().toISOString() }];
 const profile = () => ({ ...currentUser, avatar_url: currentUser.avatar_url, total_trips_as_driver: currentUser.is_driver ? 12 : 0, total_trips_as_passenger: currentUser.is_driver ? 2 : 8, avg_rating: currentUser.rating, total_reviews: 9, recent_reviews: [] });
+
+// ── Notificaciones para conductores (demo, sin backend) ──────────────────────
+// Simula lo que en producción vendría por WebSocket: cuando se confirma una
+// reserva en uno de mis viajes, se dispara un evento en vivo (para "Mis Viajes")
+// y una notificación persistente (para la campanita del header).
+const pushNotification = (userId: string, title: string, message: string) => {
+  demoNotifications.unshift({
+    id: id('notification'), user_id: userId, title, message,
+    is_read: false, created_at: new Date().toISOString(),
+  });
+};
+
+const notifyDriverOfReservation = (trip: any, reservation: any, passengerName: string) => {
+  if (typeof window === 'undefined' || !trip) return;
+  const seats = reservation.seat_count > 1 ? `${reservation.seat_count} asientos` : `${reservation.seat_count} asiento`;
+  pushNotification(
+    trip.driver_id,
+    'Nueva reserva confirmada',
+    `${passengerName} reservó ${seats} en ${trip.origin_name} → ${trip.destination_name}.`
+  );
+  const detail = {
+    type: 'reservation_confirmed',
+    trip_id: trip.id,
+    available_seats: trip.available_seats,
+    seat_count: reservation.seat_count,
+    passenger_name: passengerName,
+    origin_name: trip.origin_name,
+    destination_name: trip.destination_name,
+  };
+  window.dispatchEvent(new CustomEvent('sumaq:driver-live', { detail }));
+  window.dispatchEvent(new CustomEvent('app:notification', { detail }));
+};
+const passengerNameFor = (reservation: any) =>
+  (reservation.passenger_id === demoUsers.driver.id ? demoUsers.driver : demoUsers.passenger).full_name;
 
 export const login = async (data: LoginRequest) => { currentUser = getDemoUser(data?.email); return wait({ access_token: DEMO_TOKEN, refresh_token: DEMO_TOKEN, token_type: 'bearer', user: { ...profile(), reputation_score: currentUser.rating } }); };
 export const register = async (data: RegisterRequest) => { currentUser = { ...demoUsers.passenger, id: id('demo-user'), email: data.email, full_name: data.full_name || 'Usuario demo' }; return wait({ id: currentUser.id, email: currentUser.email, full_name: currentUser.full_name }); };
@@ -52,13 +86,34 @@ export const startTrip = async (tripId: string) => updateTrip(tripId, { status: 
 export const getActiveTrip = async () => wait(demoTrips.find(trip => trip.status === 'in_progress') || null);
 export const completeTrip = async (tripId: string) => { const trip = await updateTrip(tripId, { status: 'completed' }); return { trip, commission: { amount: 0 } }; };
 
-export const createReservation = async (data: any) => { const reservation = { id: id('reservation'), trip_id: data.trip_id, passenger_id: currentUser.id, seat_count: data.seat_count, status: 'pending', created_at: new Date().toISOString() }; demoReservations.push(reservation); return wait(reservation); };
+export const createReservation = async (data: any) => {
+  const trip = demoTrips.find(item => item.id === data.trip_id);
+  const autoConfirm = trip?.booking_mode === 'auto';
+  const reservation = { id: id('reservation'), trip_id: data.trip_id, passenger_id: currentUser.id, seat_count: data.seat_count, status: autoConfirm ? 'confirmed' : 'pending', created_at: new Date().toISOString() };
+  demoReservations.push(reservation);
+  if (autoConfirm && trip) {
+    trip.available_seats = Math.max(0, (trip.available_seats ?? 0) - reservation.seat_count);
+    notifyDriverOfReservation(trip, reservation, currentUser.full_name);
+  }
+  return wait(reservation);
+};
 export const getReservation = async (reservationId: string) => wait(demoReservations.find(item => item.id === reservationId) || demoReservations[0]);
 export const getReservationsByTrip = async (tripId: string) => wait(demoReservations.filter(item => item.trip_id === tripId).map(item => ({ ...item, passenger_name: demoUsers.passenger.full_name, driver_id: demoUsers.driver.id })));
 export const getMyReservations = async () => wait(demoReservations.filter(item => item.passenger_id === currentUser.id));
 export const getPendingReservations = async () => wait(demoReservations.filter(item => item.status === 'pending'));
 export const getDriverReservationStats = async () => wait(Object.fromEntries(demoTrips.map(trip => [trip.id, { pending: demoReservations.filter(item => item.trip_id === trip.id && item.status === 'pending').length, confirmed: 0, cancelled: 0 }])));
-export const approveReservation = async (reservationId: string) => { const reservation = demoReservations.find(item => item.id === reservationId); if (reservation) reservation.status = 'confirmed'; return wait(reservation); };
+export const approveReservation = async (reservationId: string) => {
+  const reservation = demoReservations.find(item => item.id === reservationId);
+  if (reservation) {
+    reservation.status = 'confirmed';
+    const trip = demoTrips.find(item => item.id === reservation.trip_id);
+    if (trip) {
+      trip.available_seats = Math.max(0, (trip.available_seats ?? 0) - reservation.seat_count);
+      notifyDriverOfReservation(trip, reservation, passengerNameFor(reservation));
+    }
+  }
+  return wait(reservation);
+};
 export const rejectReservation = async (reservationId: string) => { const reservation = demoReservations.find(item => item.id === reservationId); if (reservation) reservation.status = 'cancelled'; return wait(reservation); };
 export const cancelReservation = rejectReservation;
 
@@ -89,10 +144,23 @@ export const uploadDocumentFile = async (_file: File) => wait({ file_url: URL.cr
 export const createDocumentRecord = async (data: any) => wait({ id: id('document'), ...data, created_at: new Date().toISOString() });
 export const uploadProfilePhoto = async (file: File) => wait({ avatar_url: URL.createObjectURL(file) });
 export const base64ToFile = (base64: string, fileName: string) => new File([base64], fileName, { type: 'image/png' });
-export const getNotifications = async () => wait({ notifications: [], total: 0 });
-export const getUnreadNotificationsCount = async () => wait(0);
-export const markNotificationAsRead = async () => wait({ message: 'Notificación leída.' });
-export const markAllNotificationsAsRead = async () => wait({ message: 'Notificaciones actualizadas.' });
-export const getActiveAds = async () => wait([{ id: 'ad-demo-1', title: 'Viaja seguro', image_url: '/placeholder.svg', redirect_url: '#', position: 'home', is_active: true }]);
+export const getNotifications = async () => {
+  const mine = demoNotifications.filter(item => item.user_id === currentUser.id);
+  return wait({ notifications: mine, total: mine.length });
+};
+export const getUnreadNotificationsCount = async () => wait(demoNotifications.filter(item => item.user_id === currentUser.id && !item.is_read).length);
+export const markNotificationAsRead = async (notificationId: string) => {
+  const notification = demoNotifications.find(item => item.id === notificationId);
+  if (notification) notification.is_read = true;
+  return wait({ message: 'Notificación leída.' });
+};
+export const markAllNotificationsAsRead = async () => {
+  demoNotifications.filter(item => item.user_id === currentUser.id).forEach(item => { item.is_read = true; });
+  return wait({ message: 'Notificaciones actualizadas.' });
+};
+export const getActiveAds = async () => wait([
+  { id: 'ad-demo-1', title: 'Viaja seguro por el Perú con SumaqTravel', image_url: '/hero/machu-picchu.png', link_url: '/search', position: 'home', is_active: true },
+  { id: 'ad-demo-2', title: 'Arma tu itinerario con IA y viaja acompañado', image_url: '/hero/arequipa.png', link_url: '/itinerary', position: 'home', is_active: true },
+]);
 
 export const paymentService = { createCharge: async (data: any) => { if (!data?.token) throw new Error('Token requerido'); if (!data?.reservation_id) throw new Error('Se requiere una reservación'); if (!data?.email) throw new Error('Email requerido'); if (!data?.amount || data.amount <= 0) throw new Error('El monto debe ser mayor a 0'); return wait({ id: id('payment'), culqi_charge_id: id('demo-charge'), status: 'approved', payment_method: 'card', amount: data.amount, currency_code: 'PEN', message: 'Pago simulado aprobado.' }); } };

@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }: Props) => {
     if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-background">
-                <div className="animate-spin w-6 h-6 border-2 border-[#81638b] border-t-transparent rounded-full"></div>
+                <div className="animate-spin w-6 h-6 border-2 border-[#0F2A4D] border-t-transparent rounded-full"></div>
             </div>
         );
     }

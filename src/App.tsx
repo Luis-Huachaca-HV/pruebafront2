@@ -15,6 +15,7 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import ForgotPassword from "@/pages/ForgotPassword";
 import Search from "@/pages/Search";
+import Itinerary from "@/pages/Itinerary";
 import Payment from "@/pages/Payment";
 import CheckoutPage from "@/pages/CheckoutPage";
 import MyTrips from "@/pages/MyTrips";
@@ -75,6 +76,7 @@ const AppRoutes = () => {
 
         {/* PUBLIC ROUTES */}
         <Route path="/search" element={<Search />} />
+        <Route path="/itinerary" element={<Itinerary />} />
         <Route path="/trip-details/:id" element={<TripDetails />} />
 
         {/* PROTECTED ROUTES */}

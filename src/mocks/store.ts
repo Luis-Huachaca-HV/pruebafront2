@@ -26,18 +26,58 @@ export const demoUsers: Record<string, DemoUser> = {
   },
 };
 
-const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-export const demoTrips: any[] = [{
-  id: 'trip-demo-1', driver_id: demoUsers.driver.id, vehicle_id: 'vehicle-demo-1',
-  origin_name: 'Arequipa, Perú', destination_name: 'Camaná, Arequipa',
-  origin_coordinates: { latitude: -16.409, longitude: -71.537 },
-  destination_coordinates: { latitude: -16.624, longitude: -72.711 },
-  departure_time: tomorrow, total_seats: 4, available_seats: 3, price_per_seat: 28,
-  currency: 'PEN', booking_mode: 'auto', status: 'published',
-  description: 'Viaje demo con espacio para equipaje.', route_distance_km: 173,
-  route_duration_min: 180, created_at: new Date().toISOString(), driver_name: demoUsers.driver.full_name,
+const inHours = (h: number) => new Date(Date.now() + h * 60 * 60 * 1000).toISOString();
+const tomorrow = inHours(24);
+
+const baseTrip = {
+  driver_id: demoUsers.driver.id, vehicle_id: 'vehicle-demo-1', total_seats: 4,
+  currency: 'PEN', booking_mode: 'auto', status: 'published', pets_allowed: false,
+  created_at: new Date().toISOString(), driver_name: demoUsers.driver.full_name,
   driver_rating: demoUsers.driver.rating, driver_trips_completed: 42,
-}];
+};
+
+export const demoTrips: any[] = [
+  {
+    ...baseTrip, id: 'trip-demo-1',
+    origin_name: 'Arequipa, Perú', destination_name: 'Camaná, Arequipa',
+    origin_coordinates: { latitude: -16.409, longitude: -71.537 },
+    destination_coordinates: { latitude: -16.624, longitude: -72.711 },
+    departure_time: tomorrow, available_seats: 3, price_per_seat: 28,
+    description: 'Viaje demo con espacio para equipaje.', route_distance_km: 173, route_duration_min: 180,
+  },
+  {
+    ...baseTrip, id: 'trip-demo-2', pets_allowed: true,
+    origin_name: 'Lima, Perú', destination_name: 'Cusco, Perú',
+    origin_coordinates: { latitude: -12.046, longitude: -77.043 },
+    destination_coordinates: { latitude: -13.532, longitude: -71.967 },
+    departure_time: inHours(30), available_seats: 2, price_per_seat: 85,
+    description: 'Ruta directa Lima - Cusco, salida temprano.', route_distance_km: 1100, route_duration_min: 1200,
+  },
+  {
+    ...baseTrip, id: 'trip-demo-3',
+    origin_name: 'Cusco, Perú', destination_name: 'Machu Picchu, Perú',
+    origin_coordinates: { latitude: -13.532, longitude: -71.967 },
+    destination_coordinates: { latitude: -13.163, longitude: -72.545 },
+    departure_time: inHours(20), available_seats: 3, price_per_seat: 45,
+    description: 'Conexión a Ollantaytambo con parada fotográfica.', route_distance_km: 110, route_duration_min: 150,
+  },
+  {
+    ...baseTrip, id: 'trip-demo-4', pets_allowed: true,
+    origin_name: 'Arequipa, Perú', destination_name: 'Puno, Perú',
+    origin_coordinates: { latitude: -16.409, longitude: -71.537 },
+    destination_coordinates: { latitude: -15.840, longitude: -70.021 },
+    departure_time: inHours(48), available_seats: 4, price_per_seat: 55,
+    description: 'Ruta hacia el Lago Titicaca, salida de madrugada.', route_distance_km: 297, route_duration_min: 360,
+  },
+  {
+    ...baseTrip, id: 'trip-demo-5',
+    origin_name: 'Lima, Perú', destination_name: 'Arequipa, Perú',
+    origin_coordinates: { latitude: -12.046, longitude: -77.043 },
+    destination_coordinates: { latitude: -16.409, longitude: -71.537 },
+    departure_time: inHours(15), available_seats: 1, price_per_seat: 70,
+    description: 'Viaje directo por la Panamericana Sur.', route_distance_km: 1010, route_duration_min: 960,
+  },
+];
 
 export const demoVehicle: any = {
   id: 'vehicle-demo-1', driver_id: demoUsers.driver.id, brand: 'Toyota', model: 'Yaris',
@@ -47,6 +87,7 @@ export const demoVehicle: any = {
 };
 
 export const demoReservations: any[] = [];
+export const demoNotifications: any[] = [];
 export const demoMessages: any[] = [{
   id: 'message-demo-1', conversation_id: 'conversation-demo-1', sender_id: demoUsers.driver.id,
   sender_name: demoUsers.driver.full_name, content: '¡Hola! El punto de encuentro es la Plaza de Armas.', created_at: new Date().toISOString(),

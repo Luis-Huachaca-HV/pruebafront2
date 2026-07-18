@@ -1,11 +1,12 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Search, Car, MessageCircle, User } from 'lucide-react';
+import { Search, Car, MessageCircle, User, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 
 const navItems = [
   { path: '/search', label: 'Buscar', icon: Search },
+  { path: '/itinerary', label: 'Itinerario', icon: Sparkles },
   { path: '/my-trips', label: 'Mis Viajes', icon: Car },
   { path: '/messages', label: 'Mensajes', icon: MessageCircle },
   { path: '/profile', label: 'Perfil', icon: User },

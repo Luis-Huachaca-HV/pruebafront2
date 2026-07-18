@@ -31,11 +31,11 @@ const ForgotPassword: React.FC = () => {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-[#f8f6ff] flex flex-col items-center justify-center px-6 py-8">
+      <div className="min-h-screen bg-[#F4F8FC] flex flex-col items-center justify-center px-6 py-8">
 
         <div className="w-full max-w-md bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100 text-center">
 
-          <div className="w-16 h-16 bg-[#9f84f7] rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-6">
+          <div className="w-16 h-16 bg-[#F97316] rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-6">
             <CheckCircle className="w-8 h-8 text-white" />
           </div>
 
@@ -48,7 +48,7 @@ const ForgotPassword: React.FC = () => {
 
           <Button
             onClick={() => navigate('/login')}
-            className="w-full py-6 bg-[#9f84f7] hover:bg-[#8c6df5] text-white rounded-2xl font-bold"
+            className="w-full py-6 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-2xl font-bold"
           >
             Volver al inicio
           </Button>
@@ -58,7 +58,7 @@ const ForgotPassword: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f6ff] flex flex-col items-center justify-center px-6 py-8">
+    <div className="min-h-screen bg-[#F4F8FC] flex flex-col items-center justify-center px-6 py-8">
       <BrandHeader subtitle="Recupera tu acceso" className="mb-8" />
 
       <div className="w-full max-w-md bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
@@ -93,7 +93,7 @@ const ForgotPassword: React.FC = () => {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full py-6 bg-[#9f84f7] hover:bg-[#8c6df5] text-white rounded-2xl text-lg font-bold"
+            className="w-full py-6 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-2xl text-lg font-bold"
           >
             {isLoading ? 'Enviando...' : 'Enviar enlace'}
           </Button>
@@ -102,7 +102,7 @@ const ForgotPassword: React.FC = () => {
 
         <button
           onClick={() => navigate('/login')}
-          className="mt-6 text-sm text-slate-400 hover:text-[#9f84f7] transition-colors"
+          className="mt-6 text-sm text-slate-400 hover:text-[#F97316] transition-colors"
         >
           ← Volver al login
         </button>

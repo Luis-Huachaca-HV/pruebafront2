@@ -44,11 +44,11 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="w-full max-w-full bg-white p-4 sm:p-6 rounded-3xl sm:rounded-[2.5rem] shadow-2xl flex flex-col lg:flex-row lg:flex-nowrap gap-3 sm:gap-4 items-stretch lg:items-end border-2 sm:border-4 border-[#dac9df]"
+            className="w-full max-w-full bg-white p-4 sm:p-6 rounded-3xl sm:rounded-[2.5rem] shadow-2xl flex flex-col lg:flex-row lg:flex-nowrap gap-3 sm:gap-4 items-stretch lg:items-end border-2 sm:border-4 border-[#DCE8F5]"
         >
             {/* ORIGIN */}
             <div className="w-full lg:flex-1 lg:min-w-[220px]">
-                <label className="text-sm font-bold text-[#81638b] flex items-center gap-2 mb-1">
+                <label className="text-sm font-bold text-[#0F2A4D] flex items-center gap-2 mb-1">
                     <MapPin size={16} />
                     Origen
                 </label>
@@ -58,11 +58,11 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
                         onChange={(val) => setOrigin(val)}
                         placeholder="Lugar de salida"
                         className="w-full"
-                        inputClassName="w-full p-3 sm:p-4 border border-[#dac9df] rounded-2xl focus:border-[#81638b]"
+                        inputClassName="w-full p-3 sm:p-4 border border-[#DCE8F5] rounded-2xl focus:border-[#0F2A4D]"
                     />
                     <button type="button"
                         onClick={() => setOriginMapOpen(true)}
-                        className="h-12 w-12 sm:h-auto sm:w-auto sm:p-4 shrink-0 bg-[#5dc1b9] text-white rounded-2xl hover:opacity-90 transition-opacity flex items-center justify-center">
+                        className="h-12 w-12 sm:h-auto sm:w-auto sm:p-4 shrink-0 bg-[#F97316] text-white rounded-2xl hover:opacity-90 transition-opacity flex items-center justify-center">
                         <MapPin size={18} />
                     </button>
                 </div>
@@ -84,7 +84,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
 
             {/* DESTINATION */}
             <div className="w-full lg:flex-1 lg:min-w-[220px]">
-                <label className="text-sm font-bold text-[#81638b] flex items-center gap-2 mb-1">
+                <label className="text-sm font-bold text-[#0F2A4D] flex items-center gap-2 mb-1">
                     <MapPin size={16} />
                     Destino
                 </label>
@@ -94,11 +94,11 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
                         onChange={(val) => setDestination(val)}
                         placeholder="Lugar de destino"
                         className="w-full"
-                        inputClassName="w-full p-3 sm:p-4 border border-[#dac9df] rounded-2xl focus:border-[#81638b]"
+                        inputClassName="w-full p-3 sm:p-4 border border-[#DCE8F5] rounded-2xl focus:border-[#0F2A4D]"
                     />
                     <button type="button"
                         onClick={() => setDestinationMapOpen(true)}
-                        className="h-12 w-12 sm:h-auto sm:w-auto sm:p-4 shrink-0 bg-[#81638b] text-white rounded-2xl hover:opacity-90 transition-opacity flex items-center justify-center">
+                        className="h-12 w-12 sm:h-auto sm:w-auto sm:p-4 shrink-0 bg-[#0F2A4D] text-white rounded-2xl hover:opacity-90 transition-opacity flex items-center justify-center">
                         <MapPin size={18} />
                     </button>
                 </div>
@@ -120,13 +120,13 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
 
             {/* DATE */}
             <div className="w-full lg:w-44">
-                <label className="text-sm font-bold text-[#81638b] flex items-center gap-2 mb-1">
+                <label className="text-sm font-bold text-[#0F2A4D] flex items-center gap-2 mb-1">
                     <Calendar size={16} />
                     Fecha
                 </label>
                 <input
                     type="date"
-                    className="w-full p-3 sm:p-4 border border-[#dac9df] rounded-2xl outline-none focus:border-[#81638b]"
+                    className="w-full p-3 sm:p-4 border border-[#DCE8F5] rounded-2xl outline-none focus:border-[#0F2A4D]"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                 />
@@ -135,8 +135,8 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
             {/* SUBMIT BUTTON */}
             <button
                 type="submit"
-                className="w-full sm:w-auto bg-[#5dc1b9] text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#4ab0a8] transition-colors h-12 sm:h-[58px]"
-            //className="bg-red-600 text-white font-bold py-4 px-8 rounded-2xl flex items-center gap-2 hover:bg-[#4ab0a8] transition-colors h-[58px]"//(ROJO )
+                className="w-full sm:w-auto bg-[#F97316] text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#EA580C] transition-colors h-12 sm:h-[58px]"
+            //className="bg-red-600 text-white font-bold py-4 px-8 rounded-2xl flex items-center gap-2 hover:bg-[#EA580C] transition-colors h-[58px]"//(ROJO )
             >
                 <SearchIcon size={18} />
                 Buscar

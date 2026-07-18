@@ -70,8 +70,8 @@ const OAuthCallback: React.FC = () => {
   }, [searchParams, loginWithGoogleToken, navigate, toast]);
 
   return (
-    <div className="min-h-screen bg-[#f8f6ff] flex flex-col items-center justify-center gap-4">
-      <div className="w-16 h-16 bg-[#9f84f7] rounded-2xl flex items-center justify-center shadow-lg animate-pulse">
+    <div className="min-h-screen bg-[#F4F8FC] flex flex-col items-center justify-center gap-4">
+      <div className="w-16 h-16 bg-[#F97316] rounded-2xl flex items-center justify-center shadow-lg animate-pulse">
         <Car className="w-10 h-10 text-white" />
       </div>
       <p className="text-slate-600 font-medium text-lg">Completando inicio de sesión...</p>
